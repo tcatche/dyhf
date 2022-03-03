@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.c892cc08.css",
-    "main.js": "/static/js/main.de32737f.js",
-    "static/js/787.f5ef2938.chunk.js": "/static/js/787.f5ef2938.chunk.js",
-    "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/index.html",
-    "main.c892cc08.css.map": "/static/css/main.c892cc08.css.map",
-    "main.de32737f.js.map": "/static/js/main.de32737f.js.map",
-    "787.f5ef2938.chunk.js.map": "/static/js/787.f5ef2938.chunk.js.map"
+    "main.css": "/tcatche/dyhf/static/css/main.c892cc08.css",
+    "main.js": "/tcatche/dyhf/static/js/main.b14f93e9.js",
+    "static/js/787.f5ef2938.chunk.js": "/tcatche/dyhf/static/js/787.f5ef2938.chunk.js",
+    "static/media/logo.svg": "/tcatche/dyhf/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/tcatche/dyhf/index.html",
+    "main.c892cc08.css.map": "/tcatche/dyhf/static/css/main.c892cc08.css.map",
+    "main.b14f93e9.js.map": "/tcatche/dyhf/static/js/main.b14f93e9.js.map",
+    "787.f5ef2938.chunk.js.map": "/tcatche/dyhf/static/js/787.f5ef2938.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c892cc08.css",
-    "static/js/main.de32737f.js"
+    "static/js/main.b14f93e9.js"
   ]
 }
