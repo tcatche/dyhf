@@ -23,8 +23,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "start": "cross-env NODE_ENV=development craco start",
+    "build": "cross-env NODE_ENV=production craco build",
     "test": "craco test",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

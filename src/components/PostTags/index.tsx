@@ -231,6 +231,7 @@ export default class PostTags extends Component<IProps, IState> {
               {allTags.map(tag => (
                 <Button
                   key={tag._id}
+                  size="small"
                   type={checkedTags.indexOf(tag._id) > -1 ? 'primary' : 'dashed'}
                   onClick={() => this.handleChangeTagState(tag)}
                 >

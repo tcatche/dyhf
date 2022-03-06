@@ -47,7 +47,7 @@ const PostPage = () => {
         </PageHeader>
         <Skeleton loading={loading}>
           <Paragraph className="post-content">
-            {data.content || '-'}
+            {data.content ? data.content.replace(/\r\n\r\n/g, '\n\n').replace(/\r\n/g, '') : '-'}
           </Paragraph>
         </Skeleton>
       </div>

@@ -1,6 +1,8 @@
 const CracoLessPlugin = require("craco-less");
 const path = require("path");
 
+const isPro = process.env.NODE_ENV === 'production';
+
 module.exports = {
   plugins: [{ plugin: CracoLessPlugin }],
   webpack: {
@@ -9,7 +11,7 @@ module.exports = {
     },
     configure: {
       output: {
-        publicPath: '/dyhf/',
+        publicPath: isPro ? '/dyhf/' : '/tcatche/dyhf',
       },
     },
   },

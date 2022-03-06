@@ -1,5 +1,5 @@
 import { Table, Input, Space } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import { useParams, useSearchParams } from "react-router-dom";
 import { useRequest } from 'ahooks';
 import { Link } from 'react-router-dom';
@@ -43,6 +43,7 @@ const ListPage = () => {
     page: parseInt(searchParams.get('page') || '1'),
     search: searchParams.get('search') || ''
   })
+  const [searchValue, setSearchValue] = useState(searchParams.get('search') || '')
 
   const { data, loading, run } = useRequest(getPosts, {
     manual: true,
@@ -56,6 +57,10 @@ const ListPage = () => {
   const handleChangeQuery = (page: number, limit: number) => {
     setQuery({ ...query, limit, page });
     setSearchParams({ ...query, limit: limit.toString(), page: page.toString() })
+  }
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value)
   }
 
   const handleSearch = (search: string) =>{
@@ -73,9 +78,10 @@ const ListPage = () => {
             className="list-search"
             placeholder="搜索"
             onSearch={handleSearch}
+            onChange={handleSearchChange}
             enterButton
             allowClear
-            value={query.search} />
+            value={searchValue} />
         )
       }
       <Table
