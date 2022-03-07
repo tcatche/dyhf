@@ -3,6 +3,7 @@ import Layout from './components/Layout'
 import PostPage from './pages/posts'
 import ListPage from './pages/list'
 import TagsPage from './pages/tags'
+import SettingPage from './pages/setting'
 import 'antd/dist/antd.css';
 import './App.less';
 
@@ -18,6 +19,7 @@ const ROUTES: RouteItem[] = [
   {name: '标签列表', path: "/tags", layout: true, isMenu: true, component: TagsPage },
   {name: '标签文章列表', path: "/tags/:tagName", layout: true, isMenu: false, component: ListPage },
   {name: '文章内容', path: "/post/:id", layout: true, isMenu: false, component: PostPage },
+  {name: '系统设置', path: "/setting", layout: true, isMenu: true, component: SettingPage },
 ]
 
 function createRoute(route: RouteItem) {

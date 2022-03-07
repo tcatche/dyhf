@@ -1,19 +1,30 @@
 import axios, { AxiosResponse } from 'axios';
 import qs from 'qs';
+import { AES, enc } from 'crypto-js';
+import { message } from 'antd';
+
 type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch'
 
-const HOST = 'http://localhost:5000/api'
+const HOST = localStorage.getItem('api') || 'http://localhost:5000/api'
 const axiosInstance = axios.create({
   timeout: 30000,
   withCredentials: true,
 });
 
 axiosInstance.interceptors.response.use((response: AxiosResponse) => {
+  const SECRET = localStorage.getItem('secret') || '';
   const {
-    data: { code },
+    data: { code, data },
   } = response;
   if (code === 0) {
-    return response.data.data;
+    console.log(SECRET)
+    const bytes  = AES.decrypt(data, SECRET);
+    try {
+      const decryptedData = JSON.parse(bytes.toString(enc.Utf8));
+      return decryptedData;
+    } catch(e) {
+      message.error(`SECRET错误： ${SECRET}`)
+    }
   }
   throw new Error('ajax fail')
 }, (error) => {
