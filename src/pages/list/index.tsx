@@ -1,10 +1,11 @@
-import { Table, Input, Space } from 'antd';
-import { useEffect, useState, ChangeEvent } from 'react';
+import { Table, Input, Button } from 'antd';
+import { useEffect, useState, ChangeEvent, Key } from 'react';
 import { useParams, useSearchParams } from "react-router-dom";
 import { useRequest } from 'ahooks';
 import { Link } from 'react-router-dom';
 import { Post } from '../../types/post';
 import PostTags from '../../components/PostTags';
+import AddTags from '../../components/AddTags';
 import { getPosts } from '../../api/post';
 import './index.less';
 
@@ -39,11 +40,12 @@ const ListPage = () => {
   const { tagName = '' } = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState({
-    limit: parseInt(searchParams.get('limit') || '10'),
+    limit: parseInt(searchParams.get('limit') || '20'),
     page: parseInt(searchParams.get('page') || '1'),
     search: searchParams.get('search') || ''
   })
   const [searchValue, setSearchValue] = useState(searchParams.get('search') || '')
+  const [selectedRow, setSelectedRow] = useState<Key[]>([]);
 
   const { data, loading, run } = useRequest(getPosts, {
     manual: true,
@@ -63,7 +65,7 @@ const ListPage = () => {
     setSearchValue(e.target.value)
   }
 
-  const handleSearch = (search: string) =>{
+  const handleSearch = (search: string) => {
     setQuery({ ...query, search, page: 1 });
     setSearchParams({ search, page: '1' })
   }
@@ -84,12 +86,21 @@ const ListPage = () => {
             value={searchValue} />
         )
       }
+      <AddTags
+        initialChecked={[]}
+        postsId={selectedRow as string[]}>
+        <Button type="primary" className='add-tags'>批量设置标签</Button>
+      </AddTags>
       <Table
         rowKey="_id"
         size="small"
         loading={loading}
         columns={columns}
         dataSource={data?.data || [] as Post[]}
+        rowSelection={{
+          selectedRowKeys: selectedRow,
+          onChange: setSelectedRow,
+        }}
         pagination={{
           position: ['topRight', 'bottomRight'],
           showTotal: (total: number) => `共 ${total}`,

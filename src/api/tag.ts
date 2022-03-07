@@ -12,8 +12,12 @@ export function postAddTag(postId: string, name: string): Promise<TagItem> {
   }));
 }
 
+export function postsAddTags(postsId: string[], tagsId: string[]): Promise<TagItem[]> {
+  return post(`/posts/tags/add`, { postsId, tagsId });
+}
+
 export function postAddTags(postId: string, tagsId: string[]): Promise<TagItem[]> {
-  return post(`/posts/tags/add`, { postId, tagsId });
+  return postsAddTags([postId], tagsId);
 }
 
 export function newTag(name: string): Promise<TagItem> {
