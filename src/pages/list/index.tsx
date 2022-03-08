@@ -37,12 +37,13 @@ const columns = [
 ];
 
 const ListPage = () => {
-  const { tagName = '' } = useParams();
+  const { tagName = '', keyword = '' } = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState({
     limit: parseInt(searchParams.get('limit') || '20'),
     page: parseInt(searchParams.get('page') || '1'),
-    search: searchParams.get('search') || ''
+    search: searchParams.get('search') || '',
+    keyword,
   })
   const [searchValue, setSearchValue] = useState(searchParams.get('search') || '')
   const [selectedRow, setSelectedRow] = useState<Key[]>([]);
@@ -54,7 +55,7 @@ const ListPage = () => {
   useEffect(() => {
     console.log({ tagName, ...query })
     run({ tagName, ...query });
-  }, [query, tagName])
+  }, [query, tagName, keyword])
 
   const handleChangeQuery = (page: number, limit: number) => {
     setQuery({ ...query, limit, page });
@@ -73,8 +74,8 @@ const ListPage = () => {
   return (
     <div className="list">
       {
-        tagName ? (
-          <div className="tag-name">标签：{tagName}</div>
+        (tagName || keyword) ? (
+          <div className="tag-name">{ tagName ? `标签：${tagName}` : `关键字：${keyword}`}</div>
         ) : (
           <Input.Search
             className="list-search"

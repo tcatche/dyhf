@@ -3,12 +3,16 @@ import { ResponsePage } from '../types/common'
 import { Post } from '../types/post'
 
 interface IPostQuery {
+  keyword?: string;
   search?: string;
   tagName?: string;
   page?: number;
   limit?: number;
 }
 export function getPosts(params: IPostQuery): Promise<ResponsePage<Post>> {
+  if (params.keyword) {
+    return get(`/keywords/list/${params.keyword}`)
+  }
   return get('/posts/list', params);
 }
 
