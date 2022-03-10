@@ -91,6 +91,7 @@ export default class AddTags extends Component<IProps, IState> {
     const tagIdsAdd = checkedTags.filter(tagId => !initialChecked.includes(tagId));
     if (tagIdsAdd.length > 0) {
       postsAddTags(postsId, tagIdsAdd).then(tagsAdded => {
+        message.success('标签设置成功');
         this.setState({
           // tags: [...tags, ...tagsAdded],
           modalVisible: false,

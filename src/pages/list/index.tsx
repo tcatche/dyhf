@@ -36,14 +36,15 @@ const columns = [
   },
 ];
 
+let DEFAULT_PAGE_SIZE = parseInt(localStorage.getItem('pageSize') || '20')
+
 const ListPage = () => {
   const { tagName = '', keyword = '' } = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState({
-    limit: parseInt(searchParams.get('limit') || '20'),
+    limit: parseInt(searchParams.get('limit') || '0') || DEFAULT_PAGE_SIZE,
     page: parseInt(searchParams.get('page') || '1'),
     search: searchParams.get('search') || '',
-    keyword,
   })
   const [searchValue, setSearchValue] = useState(searchParams.get('search') || '')
   const [selectedRow, setSelectedRow] = useState<Key[]>([]);
@@ -53,13 +54,18 @@ const ListPage = () => {
   });
 
   useEffect(() => {
-    console.log({ tagName, ...query })
-    run({ tagName, ...query });
-  }, [query, tagName, keyword])
+    const newQuery = {...query, limit: DEFAULT_PAGE_SIZE, page: 1 };
+    setQuery(newQuery)
+  }, [tagName, keyword])
 
-  const handleChangeQuery = (page: number, limit: number) => {
+  useEffect(() => {
+    const { limit, page, ...otherQuery } = query;
+    setSearchParams({ ...otherQuery, limit: limit.toString(), page: page.toString() })
+    run({ tagName, keyword, ...query });
+  }, [query])
+
+  const handlePanginationChange = (page: number, limit: number) => {
     setQuery({ ...query, limit, page });
-    setSearchParams({ ...query, limit: limit.toString(), page: page.toString() })
   }
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -105,11 +111,11 @@ const ListPage = () => {
         pagination={{
           position: ['topRight', 'bottomRight'],
           showTotal: (total: number) => `共 ${total}`,
-          defaultPageSize: 20,
+          defaultPageSize: DEFAULT_PAGE_SIZE,
           showSizeChanger: true,
           showQuickJumper: true,
-          onShowSizeChange: handleChangeQuery,
-          onChange: handleChangeQuery,
+          onShowSizeChange: handlePanginationChange,
+          onChange: handlePanginationChange,
           defaultCurrent: 1,
           total: data?.count,
           pageSize: query.limit,
