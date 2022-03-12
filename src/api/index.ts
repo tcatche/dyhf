@@ -1,7 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 import { AES, enc } from 'crypto-js';
-import { message } from 'antd';
+import { notification } from 'antd';
 
 type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch'
 
@@ -11,10 +11,29 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+axiosInstance.interceptors.request.use((config: AxiosRequestConfig<any>) => {
+  const SECRET = localStorage.getItem('secret') || '';
+  if (config.method === 'get') {
+    let params = `data=${encodeURIComponent(AES.encrypt(JSON.stringify(config.data || {}), SECRET).toString())}`
+    const url = config.url as string;
+    if (url.indexOf('?') < 0) {
+      params = '?' + params
+    } else if (!url.endsWith('?')) {
+      params = '&' + params
+    }
+    config.url = `${url}${params}`
+  } else {
+    config.data = {
+      data: AES.encrypt(JSON.stringify(config.data || {}), SECRET).toString(),
+    }
+  }
+  return config;
+});
+
 axiosInstance.interceptors.response.use((response: AxiosResponse) => {
   const SECRET = localStorage.getItem('secret') || '';
   const {
-    data: { code, data },
+    data: { code, data, message: errorMessage },
   } = response;
   if (code === 0) {
     console.log(SECRET)
@@ -23,11 +42,13 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => {
       const decryptedData = JSON.parse(bytes.toString(enc.Utf8));
       return decryptedData;
     } catch(e) {
-      message.error(`SECRET错误： ${SECRET}`)
+      notification.error({ message: '请求失败', description: `SECRET错误： ${SECRET}`})
     }
   }
-  throw new Error('ajax fail')
+  notification.error({ message: '请求失败', description: errorMessage})
+  throw new Error(errorMessage)
 }, (error) => {
+  console.log(error)
   return Promise.reject(error);
 });
 
@@ -37,15 +58,7 @@ export function request(method: RequestMethod, url: string, body?: any, config?:
   if (method === 'delete') {
     return axiosInstance[method](queryUrl,{...config, data: body || {} })
   } else if (method === 'get') {
-    let params = body ? qs.stringify(body) : ''
-    if (params) {
-      if (queryUrl.indexOf('?') < 0) {
-        params = '?' + params
-      } else if (!queryUrl.endsWith('?')) {
-        params = '&' + params
-      }
-    }
-    return axiosInstance[method](queryUrl + params, config)
+    return axiosInstance[method](queryUrl, {...config, data: body || {} })
   } else if(method === 'post' || method === 'put' || method === 'patch'){
     return axiosInstance[method](queryUrl, body, config)
   } else if (method === 'head' || method === 'option') {
