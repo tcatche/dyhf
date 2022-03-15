@@ -35,6 +35,7 @@ const SettingPage = () => {
         setState({ ...state, [key]: value })
       }
     });
+    document.title = '系统设置';
   }, [])
 
   return (

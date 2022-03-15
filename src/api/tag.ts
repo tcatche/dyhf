@@ -6,10 +6,7 @@ export function getAllTags(): Promise<Tag[]> {
 }
 
 export function postAddTag(postId: string, name: string): Promise<TagItem> {
-  return get(`/posts/tag/add`, { postId, name }).then((tagId: string) => ({
-    _id: tagId,
-    name,
-  }));
+  return get(`/posts/tag/add`, { postId, name });
 }
 
 export function postsAddTags(postsId: string[], tagsId: string[]): Promise<TagItem[]> {

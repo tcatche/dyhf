@@ -17,6 +17,7 @@ const KeywordsPage = () => {
 
   useEffect(() => {
     run();
+    document.title = '关键字列表';
   }, [])
 
   const handleRemove = (id: string) => {
@@ -38,7 +39,7 @@ const KeywordsPage = () => {
               className="tag-item"
             >
               <Link className="tag-name" to={`/keywords/${item.name}`} style={{ borderColor: color, backgroundColor: color}}>
-                {item.name}  ({item.posts.length})
+                {item.name}  ({item.size})
               </Link>
               <Popconfirm
                 title="是否删除此标签？"

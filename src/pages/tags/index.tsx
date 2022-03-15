@@ -9,6 +9,7 @@ import './index.less';
 const COLORS = ['#108ee9', '#2db7f5', '#87d068', '#87e8de', '#ffd591', '#ffadd2', '#d46b08', '#ffe58f', '#adc6ff']
 
 const ListPage = () => {
+  document.title = '标签列表';
 
   const { data, error, loading } = useRequest(getAllTags);
   return (
@@ -22,7 +23,7 @@ const ListPage = () => {
               className="tag-item"
             >
               <Link className="tag-name" to={`/tags/${item.name}`} style={{ borderColor: color, backgroundColor: color}}>
-                {item.name}  ({item.posts.length})
+                {item.name}  ({item.size})
               </Link>
               <span className="tag-edit tag-change" style={{ borderColor: color, color}}><EditTwoTone twoToneColor={"#1890ff"} /></span>
               <Popconfirm

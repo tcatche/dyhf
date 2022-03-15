@@ -1,6 +1,7 @@
 import React, { createElement, ReactChild } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
+import { isMobile } from '../../utils/is';
 import logo from './logo.svg';
 import './index.less';
 
@@ -18,7 +19,7 @@ interface IProps {
 }
 function AppLayout(props: IProps) {
   return (
-    <Layout className="app-layout">
+    <Layout className={ isMobile() ? `app-layout mobile` : "app-layout"}>
       <Header className="layout-header">
         <div className="logo" ><img src={logo} alt="logo" /></div>
         <Menu mode="horizontal" defaultSelectedKeys={['2']}>

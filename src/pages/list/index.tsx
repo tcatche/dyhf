@@ -7,9 +7,34 @@ import { Post } from '../../types/post';
 import PostTags from '../../components/PostTags';
 import AddTags from '../../components/AddTags';
 import { getPosts } from '../../api/post';
+import { isMobile } from '../../utils/is';
 import './index.less';
 
-const columns = [
+const onCell = (_: any, index: number) => {
+  if (index === 4) {
+    return { colSpan: 0 };
+  }
+};
+
+const columns = isMobile() ? [
+  {
+    title: '标题',
+    dataIndex: 'title',
+    key: 'title',
+    render: (text: string, record: Post) => (
+      <div className="mobile-row">
+        <div className="main-content">
+          <Link to={`/post/${record._id}`}>{record.title}</Link>
+        </div>
+        <div className="sub-content">
+          <span>{record.size}</span>
+          <span>{record.date}</span>
+          <span><PostTags postId={record._id} initialTags={record.tags}/></span>
+        </div>
+      </div>
+    ),
+  },
+] :[
   {
     title: '标题',
     dataIndex: 'title',
@@ -36,7 +61,7 @@ const columns = [
   },
 ];
 
-let DEFAULT_PAGE_SIZE = parseInt(localStorage.getItem('pageSize') || '20')
+let DEFAULT_PAGE_SIZE = parseInt(localStorage.getItem('pageSize') || '30')
 
 const ListPage = () => {
   const { tagName = '', keyword = '' } = useParams();
@@ -56,6 +81,7 @@ const ListPage = () => {
   useEffect(() => {
     const newQuery = {...query, limit: DEFAULT_PAGE_SIZE, page: 1 };
     setQuery(newQuery)
+    document.title = keyword ? `关键字：${keyword}` : `标签：${tagName}`;
   }, [tagName, keyword])
 
   useEffect(() => {
@@ -75,6 +101,7 @@ const ListPage = () => {
   const handleSearch = (search: string) => {
     setQuery({ ...query, search, page: 1 });
     setSearchParams({ search, page: '1' })
+    document.title = `搜索: ${search}`;
   }
 
   return (
@@ -109,6 +136,7 @@ const ListPage = () => {
           onChange: setSelectedRow,
         }}
         pagination={{
+          pageSizeOptions: [10, 30, 50, 80, 100],
           position: ['topRight', 'bottomRight'],
           showTotal: (total: number) => `共 ${total}`,
           defaultPageSize: DEFAULT_PAGE_SIZE,
