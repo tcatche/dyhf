@@ -30,6 +30,9 @@ export default class AddTags extends Component<IProps, IState> {
   };
 
   handleShowModal = () => {
+    if (this.props.initialChecked.length === 0) {
+      message.error('请先选择标签');
+    }
     if (this.state.allTags.length === 0) {
       getAllTags().then((allTags) => {
         this.setState({

@@ -32,7 +32,9 @@ function AppLayout(props: IProps) {
         <header className="content-header">
           <img src={logo} className="content-logo" alt="logo" />
         </header>
+        <div className="content-inner">
         {props.children}
+        </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
   </Layout>

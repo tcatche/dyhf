@@ -81,7 +81,13 @@ const ListPage = () => {
   useEffect(() => {
     const newQuery = {...query, limit: DEFAULT_PAGE_SIZE, page: 1 };
     setQuery(newQuery)
-    document.title = keyword ? `关键字：${keyword}` : `标签：${tagName}`;
+    let title = '文章列表';
+    if (keyword) {
+      title = `关键字：${keyword}`
+    } else if (tagName) {
+      title = `标签：${tagName}`
+    }
+    document.title = title;
   }, [tagName, keyword])
 
   useEffect(() => {
@@ -104,6 +110,10 @@ const ListPage = () => {
     document.title = `搜索: ${search}`;
   }
 
+  const handleRefreshList = () => {
+    run({ tagName, keyword, ...query });
+  }
+
   return (
     <div className="list">
       {
@@ -123,8 +133,9 @@ const ListPage = () => {
       <AddTags
         initialChecked={[]}
         postsId={selectedRow as string[]}>
-        <Button type="primary" className='add-tags'>批量设置标签</Button>
+        <Button type="primary" className='add-tags'>设置标签</Button>
       </AddTags>
+      <Button type="primary" className='add-tags' onClick={handleRefreshList}>刷新</Button>
       <Table
         rowKey="_id"
         size="small"
