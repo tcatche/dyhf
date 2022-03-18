@@ -7,7 +7,7 @@ import { TagItem } from '../../types/tag'
 import './index.less';
 import { useEffect } from 'react';
 
-const COLORS = ['#108ee9', '#2db7f5', '#87d068', '#87e8de', '#ffd591', '#ffadd2', '#d46b08', '#ffe58f', '#adc6ff'];
+const COLORS = ['#108ee9', '#2db7f5', '#87d068', '#87e8de', '#ffd591', '#ffadd2', '#d46b08', '#ffe58f', '#adc6ff', '#d2b42c', '#346c9c', '#b2bbbe', '#61ac85', '#96c24e', '#f8bc31', '#f09c5a', '#5bae23', '#8a988e', '#1a94bc', '#8fb2c9'];
 
 interface IProps {
   title: string;
@@ -15,7 +15,8 @@ interface IProps {
   isShowEdit: boolean;
   className?: string;
   onRemove(id: string): void;
-  data: Array<TagItem>
+  data: Array<TagItem>;
+  type: 'keywords' | 'tags';
 }
 
 enum Sort {
@@ -24,18 +25,19 @@ enum Sort {
   pinyin = '3',
 }
 
-const TagsList = ({ title, loading, data: originData, isShowEdit, className, onRemove }: IProps) => {
+const TagsList = ({ title, loading, data: originData, isShowEdit, className, type, onRemove }: IProps) => {
 
-  const [sort, setSort] = useState<Sort>(Sort.default);
+  const [sort, setSort] = useState<Sort>((localStorage.getItem('tagsSort') as Sort) || Sort.default);
   const [data, setData] = useState<TagItem[]>([]);
 
   const handleSetSort = (sort = Sort.default) => {
     setSort(sort);
+    localStorage.setItem('tagsSort', sort);
     let data = originData || [];
     if (sort === Sort.size) {
       data = data.sort((item1, item2) => item2.size - item1.size)
     } else if (sort === Sort.pinyin) {
-      data = data.sort((item1, item2) => item1.name > item2.name ? 1 : -1)
+      data = data.sort((item1, item2) => item1.name.localeCompare(item2.name, 'zh-Hans-CN', {sensitivity: 'accent'}))
     }
     setData(data);
   }
@@ -51,7 +53,7 @@ const TagsList = ({ title, loading, data: originData, isShowEdit, className, onR
   return (
     <div className={classNames("tags-list", className)}>
       <div className="sort">
-        <span>列表排序:</span>
+        <span>列表排序：</span>
         <Radio.Group
           buttonStyle="solid"
           size="middle"
@@ -64,14 +66,14 @@ const TagsList = ({ title, loading, data: originData, isShowEdit, className, onR
         </Radio.Group>
       </div>
       {
-        data?.map((item: TagItem, index: number) => {
-          const color = COLORS[index % COLORS.length];
+        data?.map((item: TagItem) => {
+          const color = COLORS[Math.floor(Math.random() * COLORS.length)];
           return (
             <div
               key={item._id}
               className="tag-item"
             >
-              <Link className="tag-name" to={`/tags/${item.name}`} style={{ borderColor: color, backgroundColor: color}}>
+              <Link className="tag-name" to={`/${type}/${item.name}`} style={{ borderColor: color, backgroundColor: color}}>
                 {item.name}  ({item.size})
               </Link>
               {

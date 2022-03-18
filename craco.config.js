@@ -11,7 +11,7 @@ module.exports = {
     },
     configure: {
       output: {
-        publicPath: isPro ? '/dyhf/' : '/tcatche/dyhf',
+        publicPath: isPro ? 'https://cdn.jsdelivr.net/gh/tcatche/dyhf@gh-pages/' : '/tcatche/dyhf',
       },
     },
   },

@@ -13,6 +13,7 @@ const ListPage = () => {
       title="标签列表"
       onRemove={() => {}}
       data={data || []}
+      type="tags"
     />
   );
 }

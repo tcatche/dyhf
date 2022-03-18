@@ -30,6 +30,7 @@ const KeywordsPage = () => {
       title="关键字列表"
       onRemove={handleRemove}
       data={data || []}
+      type="keywords"
     />
   );
 }
