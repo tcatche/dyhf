@@ -117,25 +117,26 @@ const ListPage = () => {
   return (
     <div className="list">
       {
-        (tagName || keyword) ? (
+        (tagName || keyword) && (
           <div className="tag-name">{ tagName ? `标签：${tagName}` : `关键字：${keyword}`}</div>
-        ) : (
-          <Input.Search
-            className="list-search"
-            placeholder="搜索"
-            onSearch={handleSearch}
-            onChange={handleSearchChange}
-            enterButton
-            allowClear
-            value={searchValue} />
         )
       }
-      <AddTags
-        initialChecked={[]}
-        postsId={selectedRow as string[]}>
-        <Button type="primary" className='add-tags'>设置标签</Button>
-      </AddTags>
-      <Button type="primary" className='add-tags' onClick={handleRefreshList}>刷新</Button>
+      <div className="action">
+        <Button type="primary" className='add-tags' onClick={handleRefreshList}>刷新</Button>
+        <AddTags
+          initialChecked={[]}
+          postsId={selectedRow as string[]}>
+          <Button type="primary" className='add-tags'>设置标签</Button>
+        </AddTags>
+        <Input.Search
+          className="list-search"
+          placeholder="搜索"
+          onSearch={handleSearch}
+          onChange={handleSearchChange}
+          enterButton
+          allowClear
+          value={searchValue} />
+      </div>
       <Table
         rowKey="_id"
         size="small"
