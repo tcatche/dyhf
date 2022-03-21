@@ -30,7 +30,7 @@ export default class AddTags extends Component<IProps, IState> {
   };
 
   handleShowModal = () => {
-    if (this.props.initialChecked.length === 0) {
+    if (this.props.postsId.length === 0) {
       message.error('请先选择文章');
       return
     }

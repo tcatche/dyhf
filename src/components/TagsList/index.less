@@ -1,6 +1,7 @@
 .tags-list {
   text-align: left;
   @radius: 2px;
+  --text-color: #333;
   .sort {
     padding: 10px;
   }
@@ -8,15 +9,14 @@
     display: inline-block;
     margin: 4px;
     font-size: 14px;
-    font-weight: bold;
   }
   .tag-name {
     display: inline-block;
-    border: 1px solid #333;
-    color: #333;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
     line-height: 28px;
     padding: 0 8px;
-    min-width: 28px;
+    min-width: 30px;
     border-top-left-radius: @radius;
     border-bottom-left-radius: @radius;
     &:hover {
@@ -24,40 +24,38 @@
     }
   }
   .tag-count {
-    width: 28px;
-    line-height: 28px;
-    display: inline-block;
-    border: 1px solid #333;
-    text-align: center;
     font-size: 12px;
     vertical-align: top;
+    MARGIN-LEFT: 2px;
   }
   .tag-edit {
-    width: 28px;
+    width: 30px;
     line-height: 28px;
     display: inline-block;
-    border: 1px solid #333;
+    border: 1px solid var(--text-color);
     text-align: center;
     vertical-align: top;
     cursor: pointer;
+    border-left-color: var(--text-color) !important;
     &.tag-change {
       border-right: none;
     }
     &.tag-delete {
       border-top-right-radius: @radius;
       border-bottom-right-radius: @radius;
+      color: #d00;
     }
   }
 }
 .mobile .tags-list {
   .tag-name {
     line-height: 24px;
-    min-width: 24px;
+    min-width: 26px;
     font-size: 13px;
   }
   .tag-edit {
     line-height: 24px;
-    width: 24px;
+    width: 26px;
     font-size: 13px;
   }
 }

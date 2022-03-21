@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Popconfirm, Radio, RadioChangeEvent } from 'antd';
 import { Link } from 'react-router-dom';
-import { EditTwoTone, DeleteTwoTone } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import { TagItem } from '../../types/tag'
 import './index.less';
@@ -74,21 +74,27 @@ const TagsList = ({ title, loading, data: originData, isShowEdit, className, typ
               className="tag-item"
             >
               <Link className="tag-name" to={`/${type}/${item.name}`} style={{ borderColor: color, backgroundColor: color}}>
-                {item.name}  ({item.size})
+                {item.name}
+                <span className="tag-count">({item.size})</span>
               </Link>
               {
                 isShowEdit && (
                   <span
                     className="tag-edit tag-change"
-                    style={{ borderColor: color, color}}
-                  ><EditTwoTone twoToneColor={"#1890ff"} /></span>
+                    // style={{ borderColor: color, color}}
+                    style={{ borderColor: color, backgroundColor: color}}
+                  ><EditOutlined /></span>
                 )
               }
               <Popconfirm
                 title="是否删除此标签？"
                 onConfirm={() => onRemove(item._id)}
               >
-                <span className="tag-edit tag-delete" style={{ borderColor: '#d00', color}}><DeleteTwoTone twoToneColor="#d00" /></span>
+                <span
+                  className="tag-edit tag-delete"
+                  // style={{ borderColor: '#d00', color}}
+                  style={{ borderColor: color, backgroundColor: color }}
+                ><DeleteOutlined /></span>
               </Popconfirm>
             </div>
           )

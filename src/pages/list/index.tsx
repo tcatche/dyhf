@@ -93,7 +93,9 @@ const ListPage = () => {
   useEffect(() => {
     const { limit, page, ...otherQuery } = query;
     setSearchParams({ ...otherQuery, limit: limit.toString(), page: page.toString() })
-    run({ tagName, keyword, ...query });
+    if (!loading) {
+      run({ tagName, keyword, ...query });
+    }
   }, [query])
 
   const handlePanginationChange = (page: number, limit: number) => {
