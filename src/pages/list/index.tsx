@@ -24,11 +24,9 @@ const columns = isMobile() ? [
     render: (text: string, record: Post) => (
       <div className="mobile-row">
         <div className="main-content">
-          <Link to={`/post/${record._id}`}>{record.title}</Link>
+          <Link to={`/post/${record._id}`}>{record.title} - {record.date} - {record.size}</Link>
         </div>
         <div className="sub-content">
-          <span>{record.size}</span>
-          <span>{record.date}</span>
           <span><PostTags postId={record._id} initialTags={record.tags}/></span>
         </div>
       </div>
@@ -61,7 +59,7 @@ const columns = isMobile() ? [
   },
 ];
 
-let DEFAULT_PAGE_SIZE = parseInt(localStorage.getItem('pageSize') || '30')
+const DEFAULT_PAGE_SIZE = parseInt(localStorage.getItem('pageSize') || '30')
 
 const ListPage = () => {
   const { tagName = '', keyword = '' } = useParams();

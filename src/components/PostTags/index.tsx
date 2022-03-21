@@ -21,7 +21,7 @@ interface IState {
   tags: TagItem[];
 }
 
-const COLORS = ['#108ee9', '#2db7f5', '#87d068', '#87e8de', '#ffd591', '#ffadd2', '#d46b08', '#ffe58f', '#adc6ff']
+const COLORS = ['#108ee9', '#2db7f5', '#87d068', '#87e8de', '#ffd591', '#ffadd2', '#d46b08', '#ffe58f', '#adc6ff', '#A19FEE', '#89BAF6', '#83D97C', '#F9B87C', '#8BDBC9', '#FEBC3C', '#25C0BF', '#EF625E', '#F0615F', '#EC6AB9', '#28BFBF', '#FF894D', '#1AC185', '#BD75C8', '#FCBD3E']
 export default class PostTags extends Component<IProps, IState> {
   state: IState = {
     inputValue: '',
@@ -84,8 +84,8 @@ export default class PostTags extends Component<IProps, IState> {
     this.editInput = input;
   };
 
-  getTagColor = (index: number) => {
-    return COLORS[index % COLORS.length];
+  getTagColor = () => {
+    return COLORS[Math.floor(Math.random() * COLORS.length)];
   }
 
   render() {
@@ -110,7 +110,7 @@ export default class PostTags extends Component<IProps, IState> {
           }
 
           const isLongTag = tag.name.length > 20;
-          const color = this.getTagColor(index);
+          const color = this.getTagColor();
 
           const tagElem = (
             <Tag
@@ -130,7 +130,7 @@ export default class PostTags extends Component<IProps, IState> {
                   }
                 }}
               >
-                <Link to={`/tags/${tag.name}`}>{isLongTag ? `${tag.name.slice(0, 20)}...` : tag.name}</Link>
+                <Link to={`/tags/${tag.name}`}>{isLongTag ? `${tag.name.slice(0, 20)}...` : tag.name}({tag.size})</Link>
               </span>
             </Tag>
           );

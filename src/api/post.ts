@@ -11,7 +11,7 @@ interface IPostQuery {
 }
 export function getPosts(params: IPostQuery): Promise<ResponsePage<Post>> {
   if (params.keyword) {
-    return get(`/keywords/list/${params.keyword}`, params)
+    return get(`/keywords/list`, params)
   }
   return get('/posts/list', params);
 }

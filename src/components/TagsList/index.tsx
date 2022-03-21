@@ -7,7 +7,7 @@ import { TagItem } from '../../types/tag'
 import './index.less';
 import { useEffect } from 'react';
 
-const COLORS = ['#108ee9', '#2db7f5', '#87d068', '#87e8de', '#ffd591', '#ffadd2', '#d46b08', '#ffe58f', '#adc6ff', '#d2b42c', '#346c9c', '#b2bbbe', '#61ac85', '#96c24e', '#f8bc31', '#f09c5a', '#5bae23', '#8a988e', '#1a94bc', '#8fb2c9'];
+const COLORS = ['#108ee9', '#2db7f5', '#87d068', '#87e8de', '#ffd591', '#ffadd2', '#d46b08', '#ffe58f', '#adc6ff', '#A19FEE', '#89BAF6', '#83D97C', '#F9B87C', '#8BDBC9', '#FEBC3C', '#25C0BF', '#EF625E', '#F0615F', '#EC6AB9', '#28BFBF', '#FF894D', '#1AC185', '#BD75C8', '#FCBD3E'];
 
 interface IProps {
   title: string;
@@ -43,7 +43,7 @@ const TagsList = ({ title, loading, data: originData, isShowEdit, className, typ
   }
 
   useEffect(() => {
-    handleSetSort();
+    handleSetSort(sort);
   }, [originData])
 
   useEffect(() => {

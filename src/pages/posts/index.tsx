@@ -32,7 +32,6 @@ const PostPage = () => {
           <Descriptions size="small" column={1}>
             <Descriptions.Item label="日期">{data.date}</Descriptions.Item>
             <Descriptions.Item label="字数">{data.size}</Descriptions.Item>
-            <Descriptions.Item label="日期">{data.size}</Descriptions.Item>
             <Descriptions.Item label="原始链接">{data.url}</Descriptions.Item>
             <Descriptions.Item label="作者">{data.author}</Descriptions.Item>
             <Descriptions.Item label="标签">
