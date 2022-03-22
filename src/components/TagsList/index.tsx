@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Popconfirm, Radio, RadioChangeEvent } from 'antd';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import { TagItem } from '../../types/tag'
 import './index.less';
-import { useEffect } from 'react';
 
 const COLORS = ['#108ee9', '#2db7f5', '#87d068', '#87e8de', '#ffd591', '#ffadd2', '#d46b08', '#ffe58f', '#adc6ff', '#A19FEE', '#89BAF6', '#83D97C', '#F9B87C', '#8BDBC9', '#FEBC3C', '#25C0BF', '#EF625E', '#F0615F', '#EC6AB9', '#28BFBF', '#FF894D', '#1AC185', '#BD75C8', '#FCBD3E'];
 
@@ -75,7 +74,7 @@ const TagsList = ({ title, loading, data: originData, isShowEdit, className, typ
             >
               <Link className="tag-name" to={`/${type}/${item.name}`} style={{ borderColor: color, backgroundColor: color}}>
                 {item.name}
-                <span className="tag-count">({item.size})</span>
+                <span className="tag-count">[{item.size}]</span>
               </Link>
               {
                 isShowEdit && (

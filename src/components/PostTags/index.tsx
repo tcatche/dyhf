@@ -130,7 +130,7 @@ export default class PostTags extends Component<IProps, IState> {
                   }
                 }}
               >
-                <Link to={`/tags/${tag.name}`}>{isLongTag ? `${tag.name.slice(0, 20)}...` : tag.name}({tag.size})</Link>
+                <Link to={`/tags/${tag.name}`}>{isLongTag ? `${tag.name.slice(0, 20)}...` : tag.name}[{tag.size}]</Link>
               </span>
             </Tag>
           );

@@ -25,7 +25,7 @@ const PostPage = () => {
           className="site-page-header"
           title={data?.title}
           extra={[
-            <Button key="3">收藏</Button>,
+            <Button style={{display: 'none'}} key="3">收藏</Button>,
             <Button key="2" onClick={handleDelete}>删除</Button>,
           ]}
         >

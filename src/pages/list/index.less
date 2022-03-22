@@ -1,19 +1,26 @@
 .list {
-  .tag-name {
-    text-align: left;
-    font-size: 16px;
-    line-height: 60px;
-    margin-left: 10px;
-    float: left;
-  }
   .action {
-    float: right;
-    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    justify-content: flex-end;
+    .tag-name {
+      text-align: left;
+      font-size: 16px;
+      margin-left: 10px;
+      float: left;
+    }
     .list-search {
       width: 160px;
       margin-left: 6px;
     }
     .add-tags {
+      margin-left: 6px;
+      margin-bottom: 6px;
+    }
+    .posts-sort {
+      width: 100px;
       margin-left: 6px;
     }
   }

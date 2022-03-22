@@ -1,4 +1,4 @@
-import { Table, Input, Button } from 'antd';
+import { Table, Input, Button, Select } from 'antd';
 import { useEffect, useState, ChangeEvent, Key } from 'react';
 import { useParams, useSearchParams } from "react-router-dom";
 import { useRequest } from 'ahooks';
@@ -10,12 +10,6 @@ import { getPosts } from '../../api/post';
 import { isMobile } from '../../utils/is';
 import './index.less';
 
-const onCell = (_: any, index: number) => {
-  if (index === 4) {
-    return { colSpan: 0 };
-  }
-};
-
 const columns = isMobile() ? [
   {
     title: '标题',
@@ -24,7 +18,7 @@ const columns = isMobile() ? [
     render: (text: string, record: Post) => (
       <div className="mobile-row">
         <div className="main-content">
-          <Link to={`/post/${record._id}`}>{record.title} - {record.date} - {record.size}</Link>
+          <Link to={`/post/${record._id}`}>{record.title} - [{record.date}][{record.size}]</Link>
         </div>
         <div className="sub-content">
           <span><PostTags postId={record._id} initialTags={record.tags}/></span>
@@ -68,6 +62,7 @@ const ListPage = () => {
     limit: parseInt(searchParams.get('limit') || '0') || DEFAULT_PAGE_SIZE,
     page: parseInt(searchParams.get('page') || '1'),
     search: searchParams.get('search') || '',
+    sort: searchParams.get('sort') || 'date,-1',
   })
   const [searchValue, setSearchValue] = useState(searchParams.get('search') || '')
   const [selectedRow, setSelectedRow] = useState<Key[]>([]);
@@ -100,6 +95,10 @@ const ListPage = () => {
     setQuery({ ...query, limit, page });
   }
 
+  const handleSortChange = (sort: string) => {
+    setQuery({ ...query, sort });
+  }
+
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
   }
@@ -116,18 +115,28 @@ const ListPage = () => {
 
   return (
     <div className="list">
-      {
-        (tagName || keyword) && (
-          <div className="tag-name">{ tagName ? `标签：${tagName}` : `关键字：${keyword}`}</div>
-        )
-      }
       <div className="action">
+        {
+          (tagName || keyword) && (
+            <div className="tag-name">{ tagName ? `标签：${tagName}` : `关键字：${keyword}`}</div>
+          )
+        }
         <Button type="primary" className='add-tags' onClick={handleRefreshList}>刷新</Button>
         <AddTags
           initialChecked={[]}
           postsId={selectedRow as string[]}>
           <Button type="primary" className='add-tags'>设置标签</Button>
         </AddTags>
+        <Select
+          className="posts-sort"
+          defaultValue={query.sort}
+          onChange={handleSortChange}
+        >
+            <Select.Option value="date,-1">date倒序</Select.Option>
+            <Select.Option value="date,1">date正序</Select.Option>
+            <Select.Option value="size,-1">size倒序</Select.Option>
+            <Select.Option value="size,1">size正序</Select.Option>
+          </Select>
         <Input.Search
           className="list-search"
           placeholder="搜索"
