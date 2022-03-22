@@ -24,7 +24,7 @@ const KeywordsPage = () => {
 
   return (
     <TagsList
-      isShowEdit
+      isShowEdit={false}
       className="keywords-page"
       loading={loading}
       title="关键字列表"

@@ -36,7 +36,6 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => {
     data: { code, data, message: errorMessage },
   } = response;
   if (code === 0) {
-    console.log(SECRET)
     const bytes  = AES.decrypt(data, SECRET);
     try {
       const decryptedData = JSON.parse(bytes.toString(enc.Utf8));

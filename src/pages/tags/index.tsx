@@ -3,7 +3,7 @@ import { getAllTags } from '../../api/tag'
 import TagsList from '../../components/TagsList'
 import './index.less';
 
-const ListPage = () => {
+const TagsPage = () => {
   const { data, loading } = useRequest(getAllTags);
   return (
     <TagsList
@@ -18,4 +18,4 @@ const ListPage = () => {
   );
 }
 
-export default ListPage;
+export default TagsPage;
