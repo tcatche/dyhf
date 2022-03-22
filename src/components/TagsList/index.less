@@ -1,9 +1,9 @@
-.tags-list {
+.tags-page {
   text-align: left;
   @radius: 2px;
   --tag-color: #333;
-  .sort {
-    padding: 10px;
+  .tags-list {
+    padding: 16px 24px;
   }
   .tag-item {
     display: inline-block;
@@ -58,7 +58,13 @@
     }
   }
 }
-.mobile .tags-list {
+.mobile .tags-page {
+  .tags-list {
+    padding: 10px;
+  }
+  .ant-page-header {
+    padding: 10px;
+  }
   .tag-name {
     line-height: 24px;
     min-width: 24px;

@@ -12,3 +12,7 @@ export function getPosts(name: string): Promise<KeywordItem> {
 export function remove(id: string): Promise<Keyword> {
   return post(`/keywords/delete/${id}`) as Promise<Keyword>
 }
+
+export function merge(keywords: string[]): Promise<Keyword> {
+  return post(`/keywords/merge`, { keywords }) as Promise<Keyword>
+}
